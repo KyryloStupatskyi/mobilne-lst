@@ -1,0 +1,2 @@
+hasło do Postgresa 123
+przykładowe logowanie do konta 1@1.com 1234

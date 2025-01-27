@@ -1,0 +1,6 @@
+server/node_modules
+server/files/
+
+client/node_modules
+
+.idea
