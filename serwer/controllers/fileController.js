@@ -187,6 +187,56 @@ class FileController {
         .json({ message: "Error deleting file, please try again!" });
     }
   }
+
+  async updateFile(req, res) {
+    try {
+      const { id, newName } = req.body;
+
+      if (!newName) {
+        return res
+          .status(400)
+          .json({ message: "Update filename is required!" });
+      }
+
+      const file = await File.findOne({
+        where: { id, userId: req.user.userId },
+      });
+
+      if (!file) {
+        return res
+          .status(404)
+          .json({ message: "Server error please try again!" });
+      }
+
+      const oldPath = path.resolve(
+        __dirname,
+        "..",
+        "files",
+        req.user.userId.toString(),
+        file.path
+      );
+
+      const newPath = path.resolve(
+        __dirname,
+        "..",
+        "files",
+        req.user.userId.toString(),
+        file.path.replace(file.name, newName)
+      );
+
+      fs.renameSync(oldPath, newPath);
+
+      file.name = newName;
+
+      file.save();
+
+      return res.json(file);
+    } catch (error) {
+      res
+        .status(400)
+        .json({ message: "Error updating file, please try again!" });
+    }
+  }
 }
 
 module.exports = new FileController();

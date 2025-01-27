@@ -9,5 +9,6 @@ router.get("/downloadFile", authMidleware, fileController.downloadFile);
 router.post("/createDir", authMidleware, fileController.createDir);
 router.post("/uploadFile", authMidleware, fileController.uploadFile);
 router.delete("/deleteFile", authMidleware, fileController.deleteFile);
+router.patch("/updateFile", authMidleware, fileController.updateFile);
 
 module.exports = router;
